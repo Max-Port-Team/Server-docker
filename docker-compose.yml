@@ -1,6 +1,6 @@
 version: "3.8"
 services:
-  web:
+  tomcat:
     image: tomcat:8.5.75-jdk17
     container_name: tomcat-web
     hostname: tomcat-web
@@ -24,3 +24,13 @@ services:
       TZ: Asia/Shanghai
       MYSQL_ROOT_PASSWORD: 7hHeKT5jJxVGsU
     restart: unless-stopped
+  nginx:
+    image: nginx:stable
+    container_name: nginx-web
+    hostname: nginx-web
+    ports:
+      - 80:80
+    volumes:
+      - ./FrontEnd:/usr/share/nginx/html/
+    links:
+      - tomcat:tomcat
