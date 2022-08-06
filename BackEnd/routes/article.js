@@ -13,7 +13,7 @@ router.get('/queryAllArticle', function (req, res, next) {
 });
 
 router.get('/queryAllArticleByAuthor', function (req, res, next) {
-    let author = req.body.authorId;
+    let author = req.query.authorId;
     query('SELECT id,title,intro,time,author,tag,visit FROM article WHERE author=? ORDER BY id desc LIMIT 10', [author], (err, result) => {
         if (err) {
             res.status(500);
@@ -38,7 +38,7 @@ router.get('/queryAllArticleByAuthor', function (req, res, next) {
 });
 
 router.get('/queryArticleByArticleId', function (req, res, next) {
-    let articleList = req.body.articleId.join(',')
+    let articleList = req.query.articleId.join(',')
     console.log(articleList);
     query('SELECT id,title,intro,time,author,tag,visit FROM article where id in (' + articleList+')', [], (err, result) => {
         if (err) {
@@ -50,7 +50,7 @@ router.get('/queryArticleByArticleId', function (req, res, next) {
 });
 
 router.get('/queryDetailArticle', function (req, res, next) {
-    let article = req.body.articleId
+    let article = req.query.articleId
     query('SELECT * FROM article where id=?', [article], (err, result) => {
         if (err) {
             res.status(500);
