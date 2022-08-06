@@ -1,13 +1,15 @@
 version: "3.8"
 services:
-  tomcat:
-    image: tomcat:8.5.75-jdk17
-    container_name: tomcat-web
-    hostname: tomcat-web
+  node:
+    image: node:18
+    container_name: node-web
+    hostname: node-web
     ports:
-      - 8080:8080
+      - 3000:3000
     volumes:
-      - ./BackEnd:/usr/local/tomcat/webapps
+      - ./BackEnd:/BackEnd
+    working_dir: /BackEnd
+    command: npm run start
     restart: unless-stopped
     environment:
       TZ: Asia/Shanghai
@@ -33,4 +35,4 @@ services:
     volumes:
       - ./FrontEnd:/usr/share/nginx/html/
     links:
-      - tomcat:tomcat
+      - node:node
